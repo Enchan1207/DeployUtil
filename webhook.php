@@ -29,9 +29,10 @@
     // 秘密鍵のハッシュが投げられていれば取得
     if(isset($_SERVER['HTTP_X_HUB_SIGNATURE'])){
         $requestHash = substr($_SERVER['HTTP_X_HUB_SIGNATURE'], 4);
+        logging("Request hash is set: $requestHash");
     }
 
-    // リクエストボディのjsonに適合するものがconfigにあればexecute以下を実行
+    // コンフィグを回す
     foreach ($configJson['deployment_targets'] as $config) {
         // リポジトリ名
         $isSameRepo = $config['repo_name'] == $requestJson['repository']['full_name'];
@@ -58,13 +59,14 @@
         }
 
         // 諸々をログに吐き出す
-        throwErrorResponse(-1, "at config " . $config['repo_name'] . " -> " . $config['ref'] . ": Command had not been executed.");
+        logging("at config " . $config['repo_name'] . " -> " . $config['ref']);
 
         // 合致する場合はコマンドを実行
         if ($isSameRepo && $isSameAction && $isVerified){
             executeAt($config['repo_dir'], $config['execute']);
+            logging("Command had been executed: ".$config['repo_dir']." ".$config['execute']);
         } else {
-            throwErrorResponse(-1, "at config " . $config['repo_name'] . " -> " . $config['ref'] . ": Command had not been executed.");
+            logging("Command had not been executed.");
         }
     }
 
@@ -73,18 +75,26 @@
     // 実行ディレクトリを指定してコマンド実行
     function executeAt($dir = "~/", $cmd = ""){
         // 実行コマンドとディレクトリをファイルにはきだす
-        file_put_contents("system.log", $dir." : ".$cmd);
+        file_put_contents("command.log", $dir." : ".$cmd);
 
         // ディレクトリを移動してコマンド実行
         system("cd $dir;".$cmd);
     }
 
-    // レスポンスを返しつつ、エラ〜メッセージをログに吐き出す
+    // レスポンスを返しつつ、エラーメッセージをログに吐き出す
     function throwErrorResponse($responseCode = -1, $message = "", $filename="error.log"){
-        if($responseCode > 0){
-            header('HTTP', true, $responseCode);
-        }
-        file_put_contents($filename, "timestamp: " . time() . " code: $responseCode message: $message\n", FILE_APPEND);
+        header('HTTP', true, $responseCode);
+        logging("$responseCode: $message");
+    }
+
+    // ログファイルに書き出す
+    function logging($message, $filename = "system.log"){
+        // 記録するコンテンツを生成
+        date_default_timezone_set("Asia/Tokyo");
+        $content = date("Y-m-d H:i:s")." message: ".$message."\n";
+        
+        // 書き込み
+        file_put_contents($filename, $content, FILE_APPEND);
     }
 
     // ファイル名を指定してjsonを読み込む エラー時はキーdecode_errorを載せて返す
