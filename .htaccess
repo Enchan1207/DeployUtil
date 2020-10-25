@@ -1,16 +1,15 @@
-# manifest.jsonにアクセスさせない
-# (補助的なもの ドキュメントルート外への配置を推奨)
-
+# config.json
 <FilesMatch "^config.json">
     deny from all
 </FilesMatch>
 
-# 各種ログファイルにはアクセスさせない
+# *.log
 <FilesMatch ".+\.log">
     deny from all
 </FilesMatch>
 
-# gitディレクトリへのアクセスを遮断
-<FilesMatch "^\.git">
+# .gitignore, .htaccessなど
+<FilesMatch "^\..*">
     deny from all
 </FilesMatch>
+
