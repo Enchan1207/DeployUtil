@@ -40,7 +40,7 @@
         // アクション
         // TODO: アクション別にrefの文字列はある程度確定するから、
         // jsonで全部指定しなくてもいいようにはしたい
-        logging($requestJson['ref']." ::: ".$_SERVER['X-GitHub-Event']);
+        logging($requestJson['ref']." ::: ".$_SERVER['X-GITHUB-EVENT']);
         $isSameAction = $config['ref']== $requestJson['ref'];
 
         // 秘密鍵ハッシュ (Nullable)
