@@ -10,3 +10,7 @@
     deny from all
 </FilesMatch>
 
+# gitディレクトリへのアクセスを遮断
+<FilesMatch "^\.git">
+    deny from all
+</FilesMatch>
