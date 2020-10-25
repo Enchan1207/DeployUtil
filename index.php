@@ -19,7 +19,7 @@
     }
     
     // config.jsonを読み込む
-    $configPath = "config.json";
+    $configPath = "~/DeployUtilConf.json";
     $configJson = getJson($configPath);
     if(isset($configJson['decode_error'])){
         throwErrorResponse(401, "Couldn't read config.json.");
