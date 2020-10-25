@@ -37,11 +37,8 @@
         // リポジトリ名
         $isSameRepo = $config['repo_name'] == $requestJson['repository']['full_name'];
 
-        // アクション
-        // TODO: アクション別にrefの文字列はある程度確定するから、
-        // jsonで全部指定しなくてもいいようにはしたい
-        logging($requestJson['ref']." ::: ".$_SERVER['X-GITHUB-EVENT']);
-        $isSameAction = $config['ref']== $requestJson['ref'];
+        // コンフィグのrefとリクエストで投げられたrefを比較
+        $isSameAction = checkSameAction($config, $requestJson);
 
         // 秘密鍵ハッシュ (Nullable)
         $isVerified = TRUE;
@@ -70,8 +67,26 @@
             logging("Command had not been executed.");
         }
     }
-
     exit;
+
+    /* -------- */
+
+    // コンフィグで指定されたトリガーと照合
+    function checkSameAction($config, $requestJson){
+        // ref (リポジトリへの参照, pushやtagなど)
+        if(isset($config['ref'], $requestJson['ref'])){
+            // TODO: ワイルドカード対応させたい
+            return $config['ref'] == $requestJson['ref'];
+        }
+
+        // action (リリースなど)
+        if(isset($config['action'], $requestJson['action'])){
+            return $config['action'] == $requestJson['action'];
+        }
+
+        // どちらにも当てはまらなければ照合失敗とする
+        return FALSE;
+    }
 
     // 実行ディレクトリを指定してコマンド実行
     function executeAt($dir = "~/", $cmd = ""){

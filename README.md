@@ -45,3 +45,8 @@ under construction...
   
 At this time, we are certain to include `?from=github` in the GET parameters.  
 
+## Configuration option
+
+under construction...  
+
+(In the current version you need to write the string directly to the `ref`, but in the future some triggers will be able to be set to json object-like.)  
