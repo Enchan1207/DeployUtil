@@ -3,7 +3,7 @@
 ## Overview
 
 CI/CD utility using GitHub Webhook.  
-**NOTE** This repository is expected to be located at the document root of the server with Apache2 installed.  
+**NOTE:** This repository is expected to be located at the document root of the server with Apache2 installed.  
 
 ## Usage
 
@@ -22,15 +22,9 @@ The template of `config.json` is shown below:
         "deployment_targets": [
             {
                 "repo_name": "GitHub/Example",
-                "ref": "refs/heads/main",
-                "repo_dir": "/var/www/Example",
-                "execute": "/usr/local/bin/git pull origin master"
-            },
-            {
-                "repo_name": "GitHub/Example",
                 "ref": "refs/heads/develop",
                 "secret_hash": "f121cdb5dfebc4505a0ca8093ea27cfa3adda7dc",
-                "repo_dir": "~/SourceCode/Example",
+                "repo_dir": "/var/www/Example",
                 "execute": "/usr/local/bin/git checkout -b develop origin/develop"
             }
         ]
@@ -45,4 +39,9 @@ the details of each key in the configuration is shown below:
  - repo_dir: directory for repository placing
  - execute: command executed when Webhook triggered
 
+### WebHook setting
+
+under construction...  
+  
+At this time, we are certain to include `?from=github` in the GET parameters.  
 
