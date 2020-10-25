@@ -1,7 +1,7 @@
 # manifest.jsonにアクセスさせない
 # (補助的なもの ドキュメントルート外への配置を推奨)
 
-<FilesMatch "^manifest.json">
+<FilesMatch "^config.json">
     deny from all
 </FilesMatch>
 
