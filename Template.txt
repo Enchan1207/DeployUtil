@@ -12,3 +12,6 @@ ok this is caused from .git directory
 
 why...!?
 ok i understood
+
+Pushing develop branch, branch switches automatically according to the config.
+
