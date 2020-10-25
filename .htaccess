@@ -1,0 +1,12 @@
+# manifest.jsonにアクセスさせない
+# (補助的なもの ドキュメントルート外への配置を推奨)
+
+<FilesMatch "^manifest.json">
+    deny from all
+</FilesMatch>
+
+# 各種ログファイルにはアクセスさせない
+<FilesMatch "*.log">
+    deny from all
+</FilesMatch>
+
