@@ -7,3 +7,6 @@ Update!
 
 hey why you return 401
 200 returned but not updated
+
+ok this is caused from .git directory
+
