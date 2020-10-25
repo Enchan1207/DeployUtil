@@ -6,7 +6,7 @@
 </FilesMatch>
 
 # 各種ログファイルにはアクセスさせない
-<FilesMatch "*.log">
+<FilesMatch ".+\.log">
     deny from all
 </FilesMatch>
 
