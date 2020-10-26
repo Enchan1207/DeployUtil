@@ -99,7 +99,8 @@
 
     // レスポンスを返しつつ、エラーメッセージをログに吐き出す
     function throwErrorResponse($responseCode = -1, $message = "", $filename="error.log"){
-        header('HTTP', true, $responseCode);
+        // CGI版のPHPだとここで500になるらしい
+        // header('HTTP', true, $responseCode);
         logging("$responseCode: $message");
     }
 
