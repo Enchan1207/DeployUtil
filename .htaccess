@@ -9,7 +9,7 @@
 </FilesMatch>
 
 # .gitignore, .htaccessなど
-<FilesMatch "^\..*">
+<FilesMatch "^\..+">
     deny from all
 </FilesMatch>
 
