@@ -2,8 +2,6 @@
     //
     // Webhookユーティリティ
     //
-    print("Welcome to GitHub Webhook Utility!\n");
-    print("Sorry, this page is only for GitHub webhook delivering.\n");
 
     // GitHubからのアクセスでなければ400 ここは一般人によるアクセスを遮断するためのもの
     $get = htmlValidate($_GET);
