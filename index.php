@@ -102,7 +102,7 @@
         // CGI版はheader関数が使えないので、php_sapi_name()で動作モードを確認
         $phpMode = strtolower(php_sapi_name());
         if(strpos($phpMode, "cgi") === FALSE){
-            // header('HTTP', true, $responseCode);
+            header('HTTP', true, $responseCode);
         }
         logging("mode: $phpMode  reponse: $responseCode:  message: $message");
     }
