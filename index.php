@@ -99,9 +99,12 @@
 
     // レスポンスを返しつつ、エラーメッセージをログに吐き出す
     function throwErrorResponse($responseCode = -1, $message = "", $filename="error.log"){
-        // CGI版のPHPだとここで500になるらしい
-        // header('HTTP', true, $responseCode);
-        logging("$responseCode: $message");
+        // CGI版はheader関数が使えないので、php_sapi_name()で動作モードを確認
+        $phpMode = strtolower(php_sapi_name());
+        if(strpos($phpMode, "cgi") === FALSE){
+            // header('HTTP', true, $responseCode);
+        }
+        logging("mode: $phpMode  reponse: $responseCode:  message: $message");
     }
 
     // ログファイルに書き出す
